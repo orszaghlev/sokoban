@@ -20,10 +20,6 @@ Controls:
 
 * UP, DOWN, LEFT, RIGHT to move the character
 
-* R to restart the game
-
-* ESC to quit the game
-
 &nbsp;
 
 Based on the example project developed by:
