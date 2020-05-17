@@ -18,7 +18,7 @@ Run with the following commands, from the project's root directory:
 
 Controls:
 
-* UP, DOWN, LEFT, RIGHT to move the character
+* LEFT MOUSE CLICK to move the character
 
 &nbsp;
 
