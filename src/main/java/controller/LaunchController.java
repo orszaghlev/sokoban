@@ -24,7 +24,7 @@ public class LaunchController {
 
     public void startAction(ActionEvent actionEvent) throws IOException {
         if (usernameTextfield.getText().isEmpty()) {
-            errorLabel.setText("* Username is empty!");
+            errorLabel.setText("* Username is empty! *");
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/game.fxml"));
             Parent root = fxmlLoader.load();
