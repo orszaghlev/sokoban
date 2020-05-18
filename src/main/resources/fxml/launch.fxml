@@ -16,6 +16,6 @@
         <Label layoutX="151.0" layoutY="261.0" text="Username:" />
         <TextField fx:id="usernameTextfield" layoutX="222.0" layoutY="256.0" prefHeight="26.0" prefWidth="158.0" />
         <Button fx:id="startButton" layoutX="249.0" layoutY="311.0" mnemonicParsing="false" onAction="#startAction" prefHeight="51.0" prefWidth="105.0" text="START" />
-        <Label fx:id="errorLabel" layoutX="225.0" layoutY="269.0" prefHeight="16.0" prefWidth="151.0" textFill="#e30e0e" />
+        <Label fx:id="errorLabel" layoutX="225.0" layoutY="260.0" prefHeight="16.0" prefWidth="151.0" textFill="#e30e0e" />
     </children>
 </Pane>
