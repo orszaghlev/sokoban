@@ -1,6 +1,5 @@
 package controller;
 
-import game.state.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 import lombok.extern.slf4j.Slf4j;
-
 import game.results.GameResult;
 import game.results.GameResultDao;
+import game.state.SokobanState;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -63,7 +61,7 @@ public class GameController {
         }
     }
 
-    public void initdata(String userName) {
+    public void initData(String userName) {
         this.userName = userName;
         usernameLabel.setText("Current user: " + this.userName);
     }
@@ -118,11 +116,11 @@ public class GameController {
     private GameResult getResult() {
 
         GameResult result = GameResult.builder()
-                .player(userName)
-                .solved(gameState.isSolved())
-                .duration(Duration.between(beginGame, Instant.now()))
-                .steps(stepCount)
-                .build();
+                                    .player(userName)
+                                    .solved(gameState.isSolved())
+                                    .duration(Duration.between(beginGame, Instant.now()))
+                                    .steps(stepCount)
+                                    .build();
         return result;
     }
 
