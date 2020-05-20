@@ -22,13 +22,14 @@ public class LaunchController {
     @FXML
     private Label errorLabel;
 
+    @FXML
     public void startAction(ActionEvent actionEvent) throws IOException {
         if (usernameTextfield.getText().isEmpty()) {
             errorLabel.setText("* Username is empty! *");
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/game.fxml"));
             Parent root = fxmlLoader.load();
-            fxmlLoader.<GameController>getController().initdata(usernameTextfield.getText());
+            fxmlLoader.<GameController>getController().initData(usernameTextfield.getText());
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
