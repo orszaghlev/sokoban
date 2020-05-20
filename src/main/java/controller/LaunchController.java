@@ -21,8 +21,7 @@ public class LaunchController {
 
     @FXML
     private Label errorLabel;
-
-    @FXML
+    
     public void startAction(ActionEvent actionEvent) throws IOException {
         if (usernameTextfield.getText().isEmpty()) {
             errorLabel.setText("* Username is empty! *");
