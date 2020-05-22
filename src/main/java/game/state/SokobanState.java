@@ -1,295 +1,217 @@
 package game.state;
 
-import java.util.ArrayList;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The SokobanState class represents the state of the game.
  * @author orszaghlev
  */
 
-public class SokobanState {
+@Data
+@Slf4j
+public class SokobanState implements Cloneable {
 
-    public static final int OFFSET = 30;
-    public static final int SPACE = 64;
-    private static final int LEFT_COL = 1;
-    private static final int RIGHT_COL = 2;
-    private static final int TOP_COL = 3;
-    private static final int BOTTOM_COL = 4;
+    /**
+     * The array representing the initial configuration of the tray.
+     */
+    public static final int[][] INITIAL = {
+            {1, 1, 1, 1, 1, 0, 0, 0, 0},
+            {1, 2, 0, 0, 1, 0, 0, 0, 0},
+            {1, 0, 3, 3, 1, 0, 1, 1, 1},
+            {1, 0, 3, 0, 1, 0, 1, 4, 1},
+            {1, 1, 1, 0, 1, 1, 1, 4, 1},
+            {0, 1, 1, 0, 0, 0, 0, 4, 1},
+            {0, 1, 0, 0, 0, 1, 0, 0, 1},
+            {0, 1, 0, 0, 0, 1, 1, 1, 1},
+            {0, 1, 1, 1, 1, 1, 0, 0, 0}
+    };
 
-    private static ArrayList<Wall> walls;
-    private static ArrayList<Ball> balls;
-    private static ArrayList<Storage> storages;
+    /**
+     * The array representing the goal configuration of the tray.
+     */
+    public static final int[][] GOAL = {
+            {1, 1, 1, 1, 1, 0, 0, 0, 0},
+            {1, 0, 0, 0, 1, 0, 0, 0, 0},
+            {1, 0, 0, 0, 1, 0, 1, 1, 1},
+            {1, 0, 0, 0, 1, 0, 1, 3, 1},
+            {1, 1, 1, 0, 1, 1, 1, 3, 1},
+            {0, 1, 1, 0, 0, 0, 2, 3, 1},
+            {0, 1, 0, 0, 0, 1, 0, 0, 1},
+            {0, 1, 0, 0, 0, 1, 1, 1, 1},
+            {0, 1, 1, 1, 1, 1, 0, 0, 0}
+    };
 
-    private static Character character;
-    private static int w = 0;
-    private static int h = 0;
+    /**
+     * The array storing the current configuration of the tray.
+     */
+    @Setter(AccessLevel.NONE)
+    private Actor[][] tray;
 
-    private static boolean isCompleted = false;
+    /**
+     * The row of the character's position.
+     */
+    @Setter(AccessLevel.NONE)
+    private int characterRow;
 
-    private String level
-            = "WWWWW    \n"
-            + "WP  W    \n"
-            + "W BBW WWW\n"
-            + "W B W WAW\n"
-            + "WWW WWWAW\n"
-            + " WW    AW\n"
-            + " W   W  W\n"
-            + " W   WWWW\n"
-            + " WWWWW   \n";
+    /**
+     * The column of the character's position.
+     */
+    @Setter(AccessLevel.NONE)
+    private int characterCol;
 
     /**
      * The constructor of the class, initializes the level.
      */
-
-    public SokobanState(){
-        initWorld();
-    }
-
-    public void initWorld(){
-
-        walls = new ArrayList<>();
-        balls = new ArrayList<>();
-        storages = new ArrayList<>();
-
-        int x = OFFSET;
-        int y = OFFSET;
-
-        Wall wall;
-        Ball ball;
-        Storage storage;
-
-        for (int i = 0; i < level.length(); i++) {
-
-            char item = level.charAt(i);
-            switch (item) {
-
-                case '\n':
-                    y += SPACE;
-
-                    if (this.w < x) {
-                        this.w = x;
-                    }
-
-                    x = OFFSET;
-                    break;
-
-                case 'W':
-                    wall = new Wall(x,y);
-                    walls.add(wall);
-                    x += SPACE;
-                    break;
-
-                case 'B':
-                    ball = new Ball(x,y);
-                    balls.add(ball);
-                    x += SPACE;
-                    break;
-
-                case 'A':
-                    storage = new Storage(x,y);
-                    storages.add(storage);
-                    x += SPACE;
-                    break;
-
-                case 'P':
-                    character = new Character(x,y);
-                    x += SPACE;
-                    break;
-
-                case ' ':
-                    x += SPACE;
-                    break;
-
-                default:
-                    break;
-
-            }
-
-            h = y;
-        }
-
-    }
-
-    public static boolean checkWallCollision(Actor actor, int type) {
-        switch (type) {
-
-            case LEFT_COL:
-                for (int i = 0; i < walls.size(); i++) {
-                    Wall wall = walls.get(i);
-                    if (actor.isLeftCollision(wall)) {
-                        return true;
-                    }
-                }
-
-                return false;
-
-            case RIGHT_COL:
-                for (int i = 0; i < walls.size(); i++) {
-                    Wall wall = walls.get(i);
-                    if (actor.isRightCollision(wall)) {
-                        return true;
-                    }
-                }
-
-                return false;
-
-            case TOP_COL:
-                for (int i = 0; i < walls.size(); i++) {
-                    Wall wall = walls.get(i);
-                    if (actor.isTopCollision(wall)) {
-                        return true;
-                    }
-                }
-
-                return false;
-
-            case BOTTOM_COL:
-                for (int i = 0; i < walls.size(); i++) {
-                    Wall wall = walls.get(i);
-                    if (actor.isBottomCollision(wall)) {
-                        return true;
-                    }
-                }
-
-                return false;
-
-            default:
-                break;
-
-        }
-
-        return false;
-    }
-
-    public static boolean checkBallCollision(int type) {
-
-        switch (type) {
-            case LEFT_COL:
-                for (int i = 0; i < balls.size(); i++) {
-                    Ball ball = balls.get(i);
-                    if (character.isLeftCollision(ball)) {
-                        for (int j = 0; j < balls.size(); j++) {
-                            Ball item = balls.get(j);
-                            if (!ball.equals(item)) {
-                                if (ball.isLeftCollision(item)) {
-                                    return true;
-                                }
-                            }
-                            if (checkWallCollision(ball, LEFT_COL)) {
-                                return true;
-                            }
-                        }
-
-                        ball.move(-SPACE, 0);
-                        isCompleted();
-                    }
-                }
-                return false;
-
-            case RIGHT_COL:
-                for (int i = 0; i < balls.size(); i++) {
-                    Ball ball = balls.get(i);
-                    if (character.isRightCollision(ball)) {
-                        for (int j = 0; j < balls.size(); j++) {
-                            Ball item = balls.get(j);
-                            if (!ball.equals(item)) {
-                                if (ball.isRightCollision(item)) {
-                                    return true;
-                                }
-                            }
-                            if (checkWallCollision(ball, RIGHT_COL)) {
-                                return true;
-                            }
-                        }
-
-                        ball.move(SPACE, 0);
-                        isCompleted();
-                    }
-                }
-                return false;
-
-            case TOP_COL:
-                for (int i = 0; i < balls.size(); i++) {
-                    Ball ball = balls.get(i);
-                    if (character.isTopCollision(ball)) {
-                        for (int j = 0; j < balls.size(); j++) {
-                            Ball item = balls.get(j);
-                            if (!ball.equals(item)) {
-                                if (ball.isTopCollision(item)) {
-                                    return true;
-                                }
-                            }
-                            if (checkWallCollision(ball, TOP_COL)) {
-                                return true;
-                            }
-                        }
-
-                        ball.move(0, -SPACE);
-                        isCompleted();
-                    }
-                }
-                return false;
-
-            case BOTTOM_COL:
-                for (int i = 0; i < balls.size(); i++) {
-                    Ball ball = balls.get(i);
-                    if (character.isBottomCollision(ball)) {
-                        for (int j = 0; j < balls.size(); j++) {
-                            Ball item = balls.get(j);
-                            if (!ball.equals(item)) {
-                                if (ball.isBottomCollision(item)) {
-                                    return true;
-                                }
-                            }
-                            if (checkWallCollision(ball, BOTTOM_COL)) {
-                                return true;
-                            }
-                        }
-
-                        ball.move(0, SPACE);
-                        isCompleted();
-                    }
-                }
-                break;
-
-            default:
-                break;
-        }
-        return false;
+    public SokobanState() {
+        this(INITIAL);
     }
 
     /**
-     * The level is completed when the size of the balls ArrayList is equal
-     * to the number of balls in the storages.
+     * Creates a {@code SokobanState} object that is initialized with
+     * the specified array.
+     *
+     * @param a an array of size 3&#xd7;3 representing the initial configuration
+     *          of the tray
      */
+    public SokobanState(int[][] a) {
+        if (!isValidLevel(a)) {
+            throw new IllegalArgumentException();
+        }
+        initLevel(a);
+    }
 
-    public static boolean isCompleted() {
-
-        int nOfBalls = balls.size();
-        int finishedBalls = 0;
-
-        for (int i = 0; i < nOfBalls; i++) {
-            Ball ball = balls.get(i);
-
-            for (int j = 0; j < nOfBalls; j++) {
-                Storage storage = storages.get(j);
-
-                if (ball.x() == storage.x() && ball.y() == storage.y()) {
-                    finishedBalls += 1;
+    private boolean isValidLevel(int[][] a) {
+        if (a == null || a.length != 9) {
+            return false;
+        }
+        boolean foundCharacter = false;
+        for (int[] row : a) {
+            if (row == null || row.length != 9) {
+                return false;
+            }
+            for (int space : row) {
+                if (space < 0 || space >= Actor.values().length) {
+                    return false;
+                }
+                if (space == Actor.CHARACTER.getValue()) {
+                    if (foundCharacter) {
+                        return false;
+                    }
+                    foundCharacter = true;
                 }
             }
         }
+        return foundCharacter;
+    }
 
-        if (finishedBalls == nOfBalls) {
-            return true;
+    private void initLevel(int[][] a) {
+        this.tray = new Actor[9][9];
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                if ((this.tray[i][j] = Actor.of(a[i][j])) == Actor.CHARACTER) {
+                    characterRow = i;
+                    characterCol = j;
+                }
+            }
         }
-        else {
-            return false;
+    }
+
+    /**
+     * Checks whether the puzzle is solved.
+     *
+     * @return {@code true} if the puzzle is solved, {@code false} otherwise
+     */
+    public boolean isSolved() {
+        for (Actor[] row : tray) {
+            for (Actor actor : row) {
+                if (actor != Actor.EMPTY) {
+                    return false;
+                }
+            }
         }
+        return true;
+    }
+
+    /**
+     * Returns whether the character at the specified position can be moved to the
+     * empty space.
+     *
+     * @param row the row of the character to be moved
+     * @param col the column of the character to be moved
+     * @return {@code true} if the character at the specified position can be moved
+     * to the empty space, {@code false} otherwise
+     */
+    public boolean canMoveToEmptySpace(int row, int col) {
+        return 0 <= row && row <= 8 && 0 <= col && col <= 8 &&
+                Math.abs(characterRow - row) + Math.abs(characterCol - col) == 1;
+    }
+
+    /**
+     * Returns the direction to which the character at the specified position is
+     * moved to the empty space.
+     *
+     * @param row the row of the character to be moved
+     * @param col the column of the character to be moved
+     * @return the direction to which the character at the specified position is
+     * moved to the empty space
+     * @throws IllegalArgumentException if the character at the specified position
+     * can not be moved to the empty space
+     */
+    public Direction getMoveDirection(int row, int col) {
+        if (!canMoveToEmptySpace(row, col)) {
+            throw new IllegalArgumentException();
+        }
+        return Direction.of(characterRow - row, characterCol - col);
+    }
+
+    /**
+     * Moves the player at the specified position to the empty space.
+     *
+     * @param row the row of the player to be moved
+     * @param col the column of the player to be moved
+     * @throws IllegalArgumentException if the character at the specified position
+     * can not be moved to the empty space
+     */
+    public void moveToEmptySpace(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        log.info("Player at ({},{}) is moved to {}", row, col, direction);
+        tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
+        tray[row][col] = Actor.CHARACTER;
+        characterRow = row;
+        characterCol = col;
+    }
+
+    public SokobanState clone() {
+        SokobanState copy = null;
+        try {
+            copy = (SokobanState) super.clone();
+        } catch (CloneNotSupportedException e) {
+        }
+        copy.tray = new Actor[tray.length][];
+        for (int i = 0; i < tray.length; ++i) {
+            copy.tray[i] = tray[i].clone();
+        }
+        return copy;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Actor[] row : tray) {
+            for (Actor actor : row) {
+                sb.append(actor).append(' ');
+            }
+            sb.append('\n');
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args) {
         SokobanState state = new SokobanState();
+        System.out.println(state);
+        state.moveToEmptySpace(1, 1);
         System.out.println(state);
     }
 }
