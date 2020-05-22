@@ -90,8 +90,9 @@ public class GameController {
         int clickedColumn = GridPane.getColumnIndex((Node)mouseEvent.getSource());
         int clickedRow = GridPane.getRowIndex((Node)mouseEvent.getSource());
 
-        if (!gameState.isSolved()) {
+        if (!gameState.isSolved() && gameState.canMoveToEmptySpace(clickedRow, clickedColumn)) {
             stepCount++;
+            gameState.moveToEmptySpace(clickedRow, clickedColumn);
 
             if (gameState.isSolved()) {
                 log.info("Player {} solved the game in {} steps.", userName, stepCount);
