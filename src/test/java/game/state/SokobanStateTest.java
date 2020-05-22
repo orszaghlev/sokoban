@@ -31,15 +31,15 @@ class SokobanStateTest {
     @Test
     void testToString() {
         SokobanState state = new SokobanState();
-        assertEquals("1 1 1 1 1 0 0 0 0\n"
-                + "1 2 0 0 1 0 0 0 0\n"
-                + "1 0 3 3 1 0 1 1 1\n"
-                + "1 0 3 0 1 0 1 4 1\n"
-                + "1 1 1 0 1 1 1 4 1\n"
-                + "0 1 1 0 0 0 0 4 1\n"
-                + "0 1 0 0 0 1 0 0 1\n"
-                + "0 1 0 0 0 1 1 1 1\n"
-                + "0 1 1 1 1 1 0 0 0\n", state.toString());
+        assertEquals("1 1 1 1 1 0 0 0 0 \n"
+                + "1 2 0 0 1 0 0 0 0 \n"
+                + "1 0 3 3 1 0 1 1 1 \n"
+                + "1 0 3 0 1 0 1 4 1 \n"
+                + "1 1 1 0 1 1 1 4 1 \n"
+                + "0 1 1 0 0 0 0 4 1 \n"
+                + "0 1 0 0 0 1 0 0 1 \n"
+                + "0 1 0 0 0 1 1 1 1 \n"
+                + "0 1 1 1 1 1 0 0 0 \n", state.toString());
     }
 
 }
