@@ -61,7 +61,7 @@ public enum Actor {
      * {@link #EMPTY} instance.
      */
     public Actor moveTo(Direction direction) {
-        if (this == WALL) {
+        if (this == CHARACTER) {
             throw new UnsupportedOperationException();
         }
         return values()[T[ordinal()][direction.ordinal()]];
