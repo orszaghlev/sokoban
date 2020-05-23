@@ -217,7 +217,7 @@ public class SokobanState implements Cloneable {
             log.info("Player at ({},{}) moved {}", row+1, col, opposite);
         }
         if (direction == Direction.LEFT) {
-            log.info("Player at ({},{}) moved {}", row-1, col-1, opposite);
+            log.info("Player at ({},{}) moved {}", row, col-1, opposite);
         }
         if (direction == Direction.RIGHT) {
             log.info("Player at ({},{}) moved {}", row, col+1, opposite);
