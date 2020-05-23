@@ -58,7 +58,7 @@ public enum Actor {
      * @param direction the direction to which the character is moved
      * @return the character moved to the direction specified
      * @throws UnsupportedOperationException if the method is invoked on the
-     * {@link #EMPTY} instance.
+     * {@link #CHARACTER} instance.
      */
     public Actor moveTo(Direction direction) {
         if (this == CHARACTER) {
