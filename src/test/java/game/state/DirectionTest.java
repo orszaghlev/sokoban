@@ -15,4 +15,13 @@ class DirectionTest {
         assertThrows(IllegalArgumentException.class, () -> Direction.of(1, 1));
     }
 
+    @Test
+    void testOpposite() {
+        assertEquals(Direction.UP, Direction.opposite(Direction.DOWN));
+        assertEquals(Direction.RIGHT, Direction.opposite(Direction.LEFT));
+        assertEquals(Direction.DOWN, Direction.opposite(Direction.UP));
+        assertEquals(Direction.LEFT, Direction.opposite(Direction.RIGHT));
+        assertThrows(IllegalArgumentException.class, () -> Direction.of(1, 1));
+    }
+
 }
