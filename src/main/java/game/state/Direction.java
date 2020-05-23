@@ -2,6 +2,7 @@ package game.state;
 
 /**
  * Enum representing the four cardinal directions.
+ * @author orszaghlev
  */
 public enum Direction {
 
@@ -58,15 +59,25 @@ public enum Direction {
         throw new IllegalArgumentException();
     }
 
+    /**
+     * Returns the opposite of the provided direction.
+     *
+     * @param direction the provided direction
+     * @return the opposite of the provided direction
+     */
     public static Direction opposite(Direction direction) {
-        if (direction == UP)
+        if (direction == UP) {
             return DOWN;
-        if (direction == DOWN)
+        }
+        if (direction == DOWN) {
             return UP;
-        if (direction == LEFT)
+        }
+        if (direction == LEFT) {
             return RIGHT;
-        if (direction == RIGHT)
+        }
+        if (direction == RIGHT) {
             return LEFT;
+        }
         throw new IllegalArgumentException();
     }
 
