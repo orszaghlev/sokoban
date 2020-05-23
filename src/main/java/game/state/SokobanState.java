@@ -136,6 +136,34 @@ public class SokobanState implements Cloneable {
     }
 
     /**
+     * Returns whether the character at the specified position could collide
+     * with the wall.
+     *
+     * @param row the row of the character to be moved
+     * @param col the column of the character to be moved
+     * @return {@code true} if the character at the specified position could collide
+     * with the wall, {@code false} otherwise
+     */
+    public boolean checkWallCollision(int row, int col) {
+
+        return false;
+    }
+
+    /**
+     * Returns whether the character at the specified position could collide
+     * with a ball.
+     *
+     * @param row the row of the character to be moved
+     * @param col the column of the character to be moved
+     * @return {@code true} if the character at the specified position could collide
+     * with a ball, {@code false} otherwise
+     */
+    public boolean checkBallCollision(int row, int col) {
+
+        return false;
+    }
+
+    /**
      * Returns whether the character at the specified position can be moved to the
      * empty space.
      *
@@ -145,6 +173,9 @@ public class SokobanState implements Cloneable {
      * to the empty space, {@code false} otherwise
      */
     public boolean canMoveToEmptySpace(int row, int col) {
+        if (checkWallCollision(row, col) || checkBallCollision(row, col)) {
+            return false;
+        }
         return 0 <= row && row <= 8 && 0 <= col && col <= 8 &&
                 Math.abs(characterRow - row) + Math.abs(characterCol - col) == 1;
     }
@@ -168,16 +199,30 @@ public class SokobanState implements Cloneable {
     }
 
     /**
-     * Moves the player at the specified position to the empty space.
+     * Moves the character at the specified position to the empty space.
      *
-     * @param row the row of the player to be moved
-     * @param col the column of the player to be moved
+     * @param row the row of the character to be moved
+     * @param col the column of the character to be moved
      * @throws IllegalArgumentException if the character at the specified position
      * can not be moved to the empty space
      */
     public void moveToEmptySpace(int row, int col) {
         Direction direction = getMoveDirection(row, col);
-        log.info("Player at ({},{}) is moved to {}", row, col, direction);
+        Direction opposite = Direction.opposite(direction);
+
+        if (direction == Direction.UP) {
+            log.info("Player at ({},{}) moved {}", row-1, col, opposite);
+        }
+        if (direction == Direction.DOWN) {
+            log.info("Player at ({},{}) moved {}", row+1, col, opposite);
+        }
+        if (direction == Direction.LEFT) {
+            log.info("Player at ({},{}) moved {}", row-1, col-1, opposite);
+        }
+        if (direction == Direction.RIGHT) {
+            log.info("Player at ({},{}) moved {}", row, col+1, opposite);
+        }
+
         tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
         tray[row][col] = Actor.CHARACTER;
         characterRow = row;
