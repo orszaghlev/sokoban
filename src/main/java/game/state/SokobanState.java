@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
  * The SokobanState class represents the state of the game.
  * @author orszaghlev
  */
-
 @Data
 @Slf4j
 public class SokobanState implements Cloneable {
@@ -136,59 +135,28 @@ public class SokobanState implements Cloneable {
     }
 
     /**
-     * Returns whether the character at the specified position could collide
-     * with the wall.
-     *
-     * @param row the row of the character to be moved
-     * @param col the column of the character to be moved
-     * @return {@code true} if the character at the specified position could collide
-     * with the wall, {@code false} otherwise
-     */
-    public boolean checkWallCollision(int row, int col) {
-
-        return false;
-    }
-
-    /**
-     * Returns whether the character at the specified position could collide
-     * with a ball.
-     *
-     * @param row the row of the character to be moved
-     * @param col the column of the character to be moved
-     * @return {@code true} if the character at the specified position could collide
-     * with a ball, {@code false} otherwise
-     */
-    public boolean checkBallCollision(int row, int col) {
-
-        return false;
-    }
-
-    /**
-     * Returns whether the character at the specified position can be moved to the
+     * Returns whether the character can be moved to the
      * empty space.
      *
-     * @param row the row of the character to be moved
-     * @param col the column of the character to be moved
-     * @return {@code true} if the character at the specified position can be moved
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return {@code true} if the character can be moved
      * to the empty space, {@code false} otherwise
      */
     public boolean canMoveToEmptySpace(int row, int col) {
-        if (checkWallCollision(row, col) || checkBallCollision(row, col)) {
-            return false;
-        }
         return 0 <= row && row <= 8 && 0 <= col && col <= 8 &&
                 Math.abs(characterRow - row) + Math.abs(characterCol - col) == 1;
     }
 
     /**
-     * Returns the direction to which the character at the specified position is
+     * Returns the direction to which the character is
      * moved to the empty space.
      *
-     * @param row the row of the character to be moved
-     * @param col the column of the character to be moved
-     * @return the direction to which the character at the specified position is
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return the direction to which the character is
      * moved to the empty space
-     * @throws IllegalArgumentException if the character at the specified position
+     * @throws IllegalArgumentException if the character
      * can not be moved to the empty space
      */
     public Direction getMoveDirection(int row, int col) {
@@ -199,17 +167,16 @@ public class SokobanState implements Cloneable {
     }
 
     /**
-     * Moves the character at the specified position to the empty space.
+     * Moves the character to the empty space.
      *
-     * @param row the row of the character to be moved
-     * @param col the column of the character to be moved
-     * @throws IllegalArgumentException if the character at the specified position
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @throws IllegalArgumentException if the character
      * can not be moved to the empty space
      */
     public void moveToEmptySpace(int row, int col) {
         Direction direction = getMoveDirection(row, col);
         Direction opposite = Direction.opposite(direction);
-
         if (direction == Direction.UP) {
             log.info("Player at ({},{}) moved {}", row-1, col, opposite);
         }
@@ -222,7 +189,6 @@ public class SokobanState implements Cloneable {
         if (direction == Direction.RIGHT) {
             log.info("Player at ({},{}) moved {}", row, col+1, opposite);
         }
-
         tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
         tray[row][col] = Actor.CHARACTER;
         characterRow = row;
