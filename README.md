@@ -2,9 +2,11 @@
 A Java implementation of the classic game Sokoban,
 where the objective is to place the balls to the right storages.
 
+Created on Windows 10, using Java 13 and OpenJFX 14.
+
 &nbsp;
 
-Created on Windows 10, using Java 13 and OpenJFX 14.
+![img](https://i.imgur.com/mPUgmPm.png)
 
 &nbsp;
 
