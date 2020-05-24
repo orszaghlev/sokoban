@@ -60,10 +60,10 @@ public enum Direction {
     }
 
     /**
-     * Returns the opposite of the provided direction.
+     * Returns the opposite of the specified direction.
      *
-     * @param direction the provided direction
-     * @return the opposite of the provided direction
+     * @param direction the specified direction
+     * @return the opposite of the specified direction
      */
     public static Direction opposite(Direction direction) {
         if (direction == UP) {
