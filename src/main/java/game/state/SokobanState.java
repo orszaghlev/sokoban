@@ -135,6 +135,58 @@ public class SokobanState implements Cloneable {
     }
 
     /**
+     * Returns whether the character could collide
+     * with the wall when moving to the specified position.
+     *
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return {@code true} if the character could collide
+     * with the wall, {@code false} otherwise
+     */
+    public boolean checkWallCollision(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        if (direction == Direction.UP && tray[characterRow-1][characterCol] == Actor.WALL) {
+            return true;
+        }
+        if (direction == Direction.DOWN && tray[characterRow+1][characterCol] == Actor.WALL) {
+            return true;
+        }
+        if (direction == Direction.LEFT && tray[characterRow][characterCol-1] == Actor.WALL) {
+            return true;
+        }
+        if (direction == Direction.RIGHT && tray[characterRow][characterCol+1] == Actor.WALL) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether the character could collide
+     * with a ball when moving to the specified position.
+     *
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return {@code true} if the character could collide
+     * with a ball, {@code false} otherwise
+     */
+    public boolean checkBallCollision(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        if (direction == Direction.UP && tray[characterRow - 1][characterCol] == Actor.BALL) {
+            return true;
+        }
+        if (direction == Direction.DOWN && tray[characterRow + 1][characterCol] == Actor.BALL) {
+            return true;
+        }
+        if (direction == Direction.LEFT && tray[characterRow][characterCol - 1] == Actor.BALL) {
+            return true;
+        }
+        if (direction == Direction.RIGHT && tray[characterRow][characterCol + 1] == Actor.BALL) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns whether the character can be moved to the
      * empty space.
      *
