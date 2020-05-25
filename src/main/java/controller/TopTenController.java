@@ -37,6 +37,9 @@ public class TopTenController {
     private TableColumn<GameResult, Integer> steps;
 
     @FXML
+    private TableColumn<GameResult, Integer> balls;
+
+    @FXML
     private TableColumn<GameResult, Duration> duration;
 
     @FXML
@@ -61,9 +64,9 @@ public class TopTenController {
 
         player.setCellValueFactory(new PropertyValueFactory<>("player"));
         steps.setCellValueFactory(new PropertyValueFactory<>("steps"));
+        balls.setCellValueFactory(new PropertyValueFactory<>("balls"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         created.setCellValueFactory(new PropertyValueFactory<>("created"));
-
 
         duration.setCellFactory(column -> {
             TableCell<GameResult, Duration> cell = new TableCell<GameResult, Duration>() {
