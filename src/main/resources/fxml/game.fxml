@@ -124,17 +124,27 @@
             </children>
         </GridPane>
         <Button fx:id="doneButton" layoutX="309.0" layoutY="640.0" mnemonicParsing="false" onAction="#finishGame" prefHeight="52.0" prefWidth="83.0" text="Give up" />
-        <Label fx:id="solvedLabel" layoutX="424.0" layoutY="640.0" prefHeight="42.0" prefWidth="184.0" textFill="#002466">
+      <Label layoutX="31.0" layoutY="630.0" prefHeight="27.0" prefWidth="110.0" text="Placed balls:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+        <Label fx:id="solvedLabel" layoutX="424.0" layoutY="630.0" prefHeight="42.0" prefWidth="184.0" textFill="#002466">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="650.0" prefHeight="16.0" prefWidth="73.0" text="Steps:">
+      <Label fx:id="ballLabel" layoutX="150.0" layoutY="630.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+        <Label layoutX="58.0" layoutY="660.0" prefHeight="27.0" prefWidth="83.0" text="Steps:">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="stepLabel" layoutX="121.0" layoutY="650.0" text="0">
+        <Label fx:id="stepLabel" layoutX="150.0" layoutY="660.0" text="0">
             <font>
                 <Font size="18.0" />
             </font>
