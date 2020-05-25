@@ -30,6 +30,7 @@ public class GameController {
     private SokobanState gameState;
     private String userName;
     private int stepCount;
+    private int ballCount;
     private List<Image> levelImages;
     private Instant beginGame;
 
@@ -50,8 +51,12 @@ public class GameController {
     @FXML
     private Button doneButton;
 
+    @FXML
+    private Label ballLabel;
+
     private void drawGameState() {
         stepLabel.setText(String.valueOf(stepCount));
+        ballLabel.setText(String.valueOf(ballCount));
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -71,6 +76,7 @@ public class GameController {
         gameResultDao = GameResultDao.getInstance();
         gameState = new SokobanState();
         stepCount = 0;
+        ballCount = 0;
         beginGame = Instant.now();
 
         levelImages = Arrays.asList(
@@ -111,6 +117,7 @@ public class GameController {
     public void resetGame(ActionEvent actionEvent) {
         gameState = new SokobanState();
         stepCount = 0;
+        ballCount = 0;
         solvedLabel.setText("");
         drawGameState();
         beginGame = Instant.now();
