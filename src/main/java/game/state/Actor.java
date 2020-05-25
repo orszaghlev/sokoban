@@ -1,7 +1,7 @@
 package game.state;
 
 /**
- * The Actor class represents the actors in the game:
+ * The Actor enum represents the actors of the game:
  * the ball, the storage, the wall and the character.
  * @author orszaghlev
  */
@@ -11,21 +11,19 @@ public enum Actor {
     WALL,
     CHARACTER,
     BALL,
-    STORAGE;
+    STORAGE0,
+    STORAGE1;
 
-    /**
-     * The array defining the transitions between orientations when an actor is
-     * moved. Rows correspond to orientations, columns correspond to
-     * directions.
-     */
     private static final int[][] T = {
-            {0, 0, 0, 0},
-            {3, 4, 2, 5},
-            {1, 2, 6, 2},
-            {6, 3, 1, 3},
-            {4, 6, 4, 1},
-            {5, 1, 5, 6},
-            {2, 5, 3, 4}
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
     /**
