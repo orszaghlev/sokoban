@@ -78,7 +78,8 @@ public class GameController {
                 new Image(getClass().getResource("/pictures/wall.png").toExternalForm()),
                 new Image(getClass().getResource("/pictures/character.png").toExternalForm()),
                 new Image(getClass().getResource("/pictures/ball.png").toExternalForm()),
-                new Image(getClass().getResource("/pictures/storage.png").toExternalForm())
+                new Image(getClass().getResource("/pictures/storage.png").toExternalForm()),
+                new Image(getClass().getResource("/pictures/storage1.png").toExternalForm())
         );
 
         drawGameState();
