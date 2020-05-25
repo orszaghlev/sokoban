@@ -13,8 +13,9 @@ class ActorTest {
         assertEquals(Actor.WALL, Actor.of(1));
         assertEquals(Actor.CHARACTER, Actor.of(2));
         assertEquals(Actor.BALL, Actor.of(3));
-        assertEquals(Actor.STORAGE, Actor.of(4));
-        assertThrows(IllegalArgumentException.class, () -> Actor.of(5));
+        assertEquals(Actor.STORAGE0, Actor.of(4));
+        assertEquals(Actor.STORAGE1, Actor.of(5));
+        assertThrows(IllegalArgumentException.class, () -> Actor.of(6));
     }
 
 }
