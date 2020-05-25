@@ -35,9 +35,9 @@ public class SokobanState implements Cloneable {
             {1, 1, 1, 1, 1, 0, 0, 0, 0},
             {1, 0, 0, 0, 1, 0, 0, 0, 0},
             {1, 0, 0, 0, 1, 0, 1, 1, 1},
-            {1, 0, 0, 0, 1, 0, 1, 3, 1},
-            {1, 1, 1, 0, 1, 1, 1, 3, 1},
-            {0, 1, 1, 0, 0, 0, 2, 3, 1},
+            {1, 0, 0, 0, 1, 0, 1, 5, 1},
+            {1, 1, 1, 0, 1, 1, 1, 5, 1},
+            {0, 1, 1, 0, 0, 0, 2, 5, 1},
             {0, 1, 0, 0, 0, 1, 0, 0, 1},
             {0, 1, 0, 0, 0, 1, 1, 1, 1},
             {0, 1, 1, 1, 1, 1, 0, 0, 0}
@@ -187,6 +187,49 @@ public class SokobanState implements Cloneable {
     }
 
     /**
+     * Moves the character to the ball's space
+     * and moves the ball to the empty space.
+     *
+     * @param row the row where the character would be moved
+     *            (the ball's original row)
+     * @param col the column where the character would be moved
+     *            (the ball's original column)
+     */
+    public void pushBall(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        log.info("Player moved to ({},{}) from {}", row, col, direction);
+        log.info("Player moved a ball");
+        tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
+        tray[row][col] = Actor.CHARACTER;
+        characterRow = row;
+        characterCol = col;
+        if (direction == Direction.UP) {
+            if (!checkWallCollision(row+1, col)) {
+                tray[row+1][col] = Actor.BALL;
+                tray[row-1][col] = Actor.EMPTY;
+            }
+        }
+        if (direction == Direction.DOWN) {
+            if (!checkWallCollision(row-1, col)) {
+                tray[row-1][col] = Actor.BALL;
+                tray[row+1][col] = Actor.EMPTY;
+            }
+        }
+        if (direction == Direction.LEFT) {
+            if (!checkWallCollision(row, col+1)) {
+                tray[row][col+1] = Actor.BALL;
+                tray[row][col-1] = Actor.EMPTY;
+            }
+        }
+        if (direction == Direction.RIGHT) {
+            if (!checkWallCollision(row, col-1)) {
+                tray[row][col-1] = Actor.BALL;
+                tray[row][col+1] = Actor.EMPTY;
+            }
+        }
+    }
+
+    /**
      * Returns whether the character can be moved to the
      * empty space.
      *
@@ -223,24 +266,10 @@ public class SokobanState implements Cloneable {
      *
      * @param row the row where the character would be moved
      * @param col the column where the character would be moved
-     * @throws IllegalArgumentException if the character
-     * can not be moved to the empty space
      */
     public void moveToEmptySpace(int row, int col) {
         Direction direction = getMoveDirection(row, col);
-        Direction opposite = Direction.opposite(direction);
-        if (direction == Direction.UP) {
-            log.info("Player at ({},{}) moved {}", row-1, col, opposite);
-        }
-        if (direction == Direction.DOWN) {
-            log.info("Player at ({},{}) moved {}", row+1, col, opposite);
-        }
-        if (direction == Direction.LEFT) {
-            log.info("Player at ({},{}) moved {}", row, col-1, opposite);
-        }
-        if (direction == Direction.RIGHT) {
-            log.info("Player at ({},{}) moved {}", row, col+1, opposite);
-        }
+        log.info("Player moved to ({},{}) from {}", row, col, direction);
         tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
         tray[row][col] = Actor.CHARACTER;
         characterRow = row;
