@@ -40,6 +40,11 @@ public class GameResult {
     private int steps;
 
     /**
+     * The number of balls placed by the player.
+     */
+    private int balls;
+
+    /**
      * The duration of the game.
      */
     @Column(nullable = false)

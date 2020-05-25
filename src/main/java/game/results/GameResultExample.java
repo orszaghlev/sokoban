@@ -10,6 +10,7 @@ public class GameResultExample {
                 .player("orszaghlev")
                 .solved(true)
                 .steps(36)
+                .balls(3)
                 .duration(Duration.ofMinutes(3))
                 .build();
         gameResultDao.persist(gameResult);
