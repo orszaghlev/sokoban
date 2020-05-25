@@ -46,13 +46,13 @@ public class GameController {
     private Label stepLabel;
 
     @FXML
+    private Label ballLabel;
+
+    @FXML
     private Label solvedLabel;
 
     @FXML
     private Button doneButton;
-
-    @FXML
-    private Label ballLabel;
 
     private void drawGameState() {
         stepLabel.setText(String.valueOf(stepCount));
@@ -102,9 +102,12 @@ public class GameController {
             }
             else {
                 gameState.pushBall(clickedRow, clickedColumn);
+                if (gameState.isBallPlaced(clickedRow, clickedColumn)) {
+                    ballCount++;
+                }
             }
 
-            if (gameState.isSolved()) {
+            if (gameState.isSolved() && ballCount == 3) {
                 log.info("Player {} solved the game in {} steps.", userName, stepCount);
                 solvedLabel.setText("You solved the puzzle!");
                 doneButton.setText("Finish");
@@ -129,6 +132,7 @@ public class GameController {
                                     .player(userName)
                                     .solved(gameState.isSolved())
                                     .duration(Duration.between(beginGame, Instant.now()))
+                                    .balls(ballCount)
                                     .steps(stepCount)
                                     .build();
         return result;
