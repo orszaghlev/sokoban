@@ -68,7 +68,6 @@ public class GameController {
 
     @FXML
     public void initialize() {
-
         gameResultDao = GameResultDao.getInstance();
         gameState = new SokobanState();
         stepCount = 0;
@@ -86,11 +85,10 @@ public class GameController {
     }
 
     public void levelClick(MouseEvent mouseEvent) {
-
         int clickedColumn = GridPane.getColumnIndex((Node)mouseEvent.getSource());
         int clickedRow = GridPane.getRowIndex((Node)mouseEvent.getSource());
 
-        if (!gameState.isSolved() && gameState.canMoveToEmptySpace(clickedRow, clickedColumn)) {
+        if (!gameState.isSolved() && !gameState.checkWallCollision(clickedRow, clickedColumn) && gameState.canMoveToEmptySpace(clickedRow, clickedColumn)) {
             stepCount++;
             gameState.moveToEmptySpace(clickedRow, clickedColumn);
 
@@ -98,7 +96,6 @@ public class GameController {
                 log.info("Player {} solved the game in {} steps.", userName, stepCount);
                 solvedLabel.setText("You solved the puzzle!");
                 doneButton.setText("Finish");
-
                 gameResultDao.persist(getResult());
             }
         }
@@ -115,7 +112,6 @@ public class GameController {
     }
 
     private GameResult getResult() {
-
         GameResult result = GameResult.builder()
                                     .player(userName)
                                     .solved(gameState.isSolved())
