@@ -14,8 +14,8 @@ public enum Actor {
     STORAGE;
 
     /**
-     * The array defining the transitions between orientations when a character is
-     * moved. Rows correspond to cube orientations, columns correspond to
+     * The array defining the transitions between orientations when an actor is
+     * moved. Rows correspond to orientations, columns correspond to
      * directions.
      */
     private static final int[][] T = {
@@ -53,10 +53,10 @@ public enum Actor {
     }
 
     /**
-     * Moves the character to the direction specified.
+     * Moves the actor to the direction specified.
      *
-     * @param direction the direction to which the character is moved
-     * @return the character moved to the direction specified
+     * @param direction the direction to which the actor is moved
+     * @return the actor moved to the direction specified
      * @throws UnsupportedOperationException if the method is invoked on the
      * {@link #CHARACTER} instance.
      */
