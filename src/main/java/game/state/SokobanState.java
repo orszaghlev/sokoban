@@ -126,7 +126,7 @@ public class SokobanState implements Cloneable {
     public boolean isSolved() {
         for (Actor[] row : tray) {
             for (Actor actor : row) {
-                if (actor != Actor.EMPTY) {
+                if (actor != Actor.CHARACTER && actor != Actor.EMPTY) {
                     return false;
                 }
             }
@@ -145,16 +145,16 @@ public class SokobanState implements Cloneable {
      */
     public boolean checkWallCollision(int row, int col) {
         Direction direction = getMoveDirection(row, col);
-        if (direction == Direction.UP && tray[characterRow-1][characterCol] == Actor.WALL) {
+        if (direction == Direction.UP && tray[characterRow+1][characterCol] == Actor.WALL) {
             return true;
         }
-        if (direction == Direction.DOWN && tray[characterRow+1][characterCol] == Actor.WALL) {
+        if (direction == Direction.DOWN && tray[characterRow-1][characterCol] == Actor.WALL) {
             return true;
         }
-        if (direction == Direction.LEFT && tray[characterRow][characterCol-1] == Actor.WALL) {
+        if (direction == Direction.LEFT && tray[characterRow][characterCol+1] == Actor.WALL) {
             return true;
         }
-        if (direction == Direction.RIGHT && tray[characterRow][characterCol+1] == Actor.WALL) {
+        if (direction == Direction.RIGHT && tray[characterRow][characterCol-1] == Actor.WALL) {
             return true;
         }
         return false;
@@ -171,16 +171,16 @@ public class SokobanState implements Cloneable {
      */
     public boolean checkBallCollision(int row, int col) {
         Direction direction = getMoveDirection(row, col);
-        if (direction == Direction.UP && tray[characterRow - 1][characterCol] == Actor.BALL) {
+        if (direction == Direction.UP && tray[characterRow+1][characterCol] == Actor.BALL) {
             return true;
         }
-        if (direction == Direction.DOWN && tray[characterRow + 1][characterCol] == Actor.BALL) {
+        if (direction == Direction.DOWN && tray[characterRow-1][characterCol] == Actor.BALL) {
             return true;
         }
-        if (direction == Direction.LEFT && tray[characterRow][characterCol - 1] == Actor.BALL) {
+        if (direction == Direction.LEFT && tray[characterRow][characterCol+1] == Actor.BALL) {
             return true;
         }
-        if (direction == Direction.RIGHT && tray[characterRow][characterCol + 1] == Actor.BALL) {
+        if (direction == Direction.RIGHT && tray[characterRow][characterCol-1] == Actor.BALL) {
             return true;
         }
         return false;
