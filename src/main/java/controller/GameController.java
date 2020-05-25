@@ -90,7 +90,12 @@ public class GameController {
 
         if (!gameState.isSolved() && !gameState.checkWallCollision(clickedRow, clickedColumn) && gameState.canMoveToEmptySpace(clickedRow, clickedColumn)) {
             stepCount++;
-            gameState.moveToEmptySpace(clickedRow, clickedColumn);
+            if (!gameState.checkBallCollision(clickedRow, clickedColumn)) {
+                gameState.moveToEmptySpace(clickedRow, clickedColumn);
+            }
+            else {
+                gameState.pushBall(clickedRow, clickedColumn);
+            }
 
             if (gameState.isSolved()) {
                 log.info("Player {} solved the game in {} steps.", userName, stepCount);
