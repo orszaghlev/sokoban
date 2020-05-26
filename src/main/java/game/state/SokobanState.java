@@ -124,14 +124,10 @@ public class SokobanState implements Cloneable {
      * @return {@code true} if the puzzle is solved, {@code false} otherwise
      */
     public boolean isSolved() {
-        for (Actor[] row : tray) {
-            for (Actor actor : row) {
-                if (actor != Actor.CHARACTER && actor != Actor.EMPTY) {
-                    return false;
-                }
-            }
+        if (tray[3][7] == Actor.STORAGE1 && tray[4][7] == Actor.STORAGE1 && tray[5][7] == Actor.STORAGE1) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
