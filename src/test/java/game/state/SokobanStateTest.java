@@ -14,6 +14,41 @@ class SokobanStateTest {
     }
 
     @Test
+    void testSokobanStateByteArrayArrayInvalidArgument() {
+        assertThrows(IllegalArgumentException.class, () -> new SokobanState(null));
+        assertThrows(IllegalArgumentException.class, () -> new SokobanState(new int[][] {
+                {1, 1},
+                {1, 0}})
+        );
+        assertThrows(IllegalArgumentException.class, () -> new SokobanState(new int[][] {
+                {0},
+                {1, 2},
+                {3, 4, 5}})
+        );
+        assertThrows(IllegalArgumentException.class, () -> new SokobanState(new int[][] {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}})
+        );
+        assertThrows(IllegalArgumentException.class, () -> new SokobanState(new int[][] {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}})
+        );
+        assertThrows(IllegalArgumentException.class, () -> new SokobanState(new int[][] {
+                {0, 1, 1, 3, 4, 2, 1, 1, 0},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 0, 2, 2, 5, 1, 2, 1},
+                {3, 1, 2, 4, 3, 5, 2, 0, 4},
+                {2, 2, 2, 2, 2, 2, 2, 2, 2},
+                {0, 2, 0, 4, 0, 1, 0, 3, 1},
+                {3, 3, 3, 3, 3, 3, 3, 3, 3},
+                {1, 4, 1, 2, 1, 3, 1, 0, 1},
+                {4, 4, 4, 4, 4, 4, 4, 4, 4}})
+        );
+    }
+
+    @Test
     void testSokobanStateByteArrayArrayValidArgument() {
         int[][] a = new int[][] {
                 {1, 1, 1, 1, 1, 0, 0, 0, 0},
