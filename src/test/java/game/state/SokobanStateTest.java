@@ -14,15 +14,43 @@ class SokobanStateTest {
     }
 
     @Test
+    void testSokobanStateByteArrayArrayValidArgument() {
+        int[][] a = new int[][] {
+                {1, 1, 1, 1, 1, 0, 0, 0, 0},
+                {1, 2, 0, 0, 1, 0, 0, 0, 0},
+                {1, 0, 3, 3, 1, 0, 1, 1, 1},
+                {1, 0, 3, 0, 1, 0, 1, 4, 1},
+                {1, 1, 1, 0, 1, 1, 1, 4, 1},
+                {0, 1, 1, 0, 0, 0, 0, 4, 1},
+                {0, 1, 0, 0, 0, 1, 0, 0, 1},
+                {0, 1, 0, 0, 0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1, 1, 0, 0, 0}
+        };
+        SokobanState state = new SokobanState(a);
+        assertArrayEquals(new Actor[][] {
+                {Actor.WALL, Actor.WALL, Actor.WALL, Actor.WALL, Actor.WALL, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY},
+                {Actor.WALL, Actor.CHARACTER, Actor.EMPTY, Actor.EMPTY, Actor.WALL, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY},
+                {Actor.WALL, Actor.EMPTY, Actor.BALL, Actor.BALL, Actor.WALL, Actor.EMPTY, Actor.WALL, Actor.WALL, Actor.WALL},
+                {Actor.WALL, Actor.EMPTY, Actor.BALL, Actor.EMPTY, Actor.WALL, Actor.EMPTY, Actor.WALL, Actor.STORAGE0, Actor.WALL},
+                {Actor.WALL, Actor.WALL, Actor.WALL, Actor.EMPTY, Actor.WALL, Actor.WALL, Actor.WALL, Actor.STORAGE0, Actor.WALL},
+                {Actor.EMPTY, Actor.WALL, Actor.WALL, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY, Actor.STORAGE0, Actor.WALL},
+                {Actor.EMPTY, Actor.WALL, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY, Actor.WALL, Actor.EMPTY, Actor.EMPTY, Actor.WALL},
+                {Actor.EMPTY, Actor.WALL, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY, Actor.WALL, Actor.WALL, Actor.WALL, Actor.WALL},
+                {Actor.EMPTY, Actor.WALL, Actor.WALL, Actor.WALL, Actor.WALL, Actor.WALL, Actor.EMPTY, Actor.EMPTY, Actor.EMPTY}
+        }, state.getTray());
+        assertCharacterSpace(1, 1, state);
+    }
+
+    @Test
     void testIsSolved() {
         assertFalse(new SokobanState().isSolved());
         assertTrue(new SokobanState(new int[][] {
                 {1, 1, 1, 1, 1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 1, 0, 1, 1, 1},
-                {1, 0, 0, 0, 1, 0, 1, 3, 1},
-                {1, 1, 1, 0, 1, 1, 1, 3, 1},
-                {0, 1, 1, 0, 0, 0, 2, 3, 1},
+                {1, 0, 0, 0, 1, 0, 1, 5, 1},
+                {1, 1, 1, 0, 1, 1, 1, 5, 1},
+                {0, 1, 1, 0, 0, 0, 2, 5, 1},
                 {0, 1, 0, 0, 0, 1, 0, 0, 1},
                 {0, 1, 0, 0, 0, 1, 1, 1, 1},
                 {0, 1, 1, 1, 1, 1, 0, 0, 0}}).isSolved());
