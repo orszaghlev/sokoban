@@ -101,13 +101,16 @@ public class GameController {
                 gameState.moveToEmptySpace(clickedRow, clickedColumn);
             }
             else {
-                gameState.pushBall(clickedRow, clickedColumn);
-                if (gameState.isBallPlaced(clickedRow, clickedColumn)) {
+                if (!gameState.isBallPlaced(clickedRow, clickedColumn)) {
+                    gameState.pushBall(clickedRow, clickedColumn);
+                }
+                else {
                     ballCount++;
+                    gameState.fillStorage(clickedRow, clickedColumn);
                 }
             }
 
-            if (gameState.isSolved() && ballCount == 3) {
+            if (gameState.isSolved()) {
                 log.info("Player {} solved the game in {} steps.", userName, stepCount);
                 solvedLabel.setText("You solved the puzzle!");
                 doneButton.setText("Finish");
