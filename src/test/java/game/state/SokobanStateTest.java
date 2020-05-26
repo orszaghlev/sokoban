@@ -140,7 +140,13 @@ class SokobanStateTest {
 
     @Test
     void testCheckBallCollision() {
-
+        SokobanState state = new SokobanState();
+        assertCharacterSpace(1, 1, state);
+        state.moveToEmptySpace(2, 1);
+        assertCharacterSpace(2, 1, state);
+        assertFalse(state.checkBallCollision(1, 1));
+        assertFalse(state.checkBallCollision(3, 1));
+        assertTrue(state.checkBallCollision(2, 2));
     }
 
     @Test
