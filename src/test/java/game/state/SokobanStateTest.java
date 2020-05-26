@@ -116,6 +116,49 @@ class SokobanStateTest {
     }
 
     @Test
+    void testMoveToEmptySpace() {
+        SokobanState state = new SokobanState();
+        assertCharacterSpace(1, 1, state);
+        Actor actor = state.getTray()[2][1];
+        state.moveToEmptySpace(2, 1);
+        assertCharacterSpace(2, 1, state);
+        assertEquals(actor.moveTo(Direction.DOWN), state.getTray()[1][1]);
+        state.moveToEmptySpace(1, 1);
+        assertCharacterSpace(1, 1, state);
+        assertEquals(actor, state.getTray()[2][1]);
+    }
+
+    @Test
+    void testCheckWallCollision() {
+        SokobanState state = new SokobanState();
+        assertCharacterSpace(1, 1, state);
+        assertFalse(state.checkWallCollision(1, 2));
+        assertFalse(state.checkWallCollision(2, 1));
+        assertTrue(state.checkWallCollision(0, 1));
+        assertTrue(state.checkWallCollision(1, 0));
+    }
+
+    @Test
+    void testCheckBallCollision() {
+
+    }
+
+    @Test
+    void testPushBall() {
+
+    }
+
+    @Test
+    void testIsBallPlaced() {
+
+    }
+
+    @Test
+    void testFillStorage() {
+
+    }
+
+    @Test
     void testToString() {
         SokobanState state = new SokobanState();
         assertEquals("1 1 1 1 1 0 0 0 0 \n"
