@@ -187,7 +187,7 @@ public class SokobanState implements Cloneable {
     }
 
     /**
-     * Moves the character to the ball's space
+     * Moves the character to the ball's original space
      * and moves the ball to the empty space.
      *
      * @param row the row where the character would be moved
@@ -225,6 +225,71 @@ public class SokobanState implements Cloneable {
             if (!checkWallCollision(row, col-1)) {
                 tray[row][col-1] = Actor.BALL;
                 tray[row][col+1] = Actor.EMPTY;
+            }
+        }
+    }
+
+    /**
+     * Returns whether the ball was placed in
+     * one of the storages.
+     *
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return {@code true} if the ball was placed in
+     * one of the storages, {@code false} otherwise
+     */
+    public boolean isBallPlaced(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        if (direction == Direction.UP && tray[characterRow+2][characterCol] == Actor.STORAGE0) {
+            return true;
+        }
+        if (direction == Direction.DOWN && tray[characterRow-2][characterCol] == Actor.STORAGE0) {
+            return true;
+        }
+        if (direction == Direction.LEFT && tray[characterRow][characterCol+2] == Actor.STORAGE0) {
+            return true;
+        }
+        if (direction == Direction.RIGHT && tray[characterRow][characterCol-2] == Actor.STORAGE0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Moves the character to the ball's original space
+     * and fills one of the storages.
+     *
+     * @param row the row where the character would be moved
+     *            (the ball's original row)
+     * @param col the column where the character would be moved
+     *            (the ball's original column)
+     */
+    public void fillStorage(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        log.info("Player moved to ({},{}) from {}", row, col, direction);
+        log.info("Player filled a storage");
+        tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
+        tray[row][col] = Actor.CHARACTER;
+        characterRow = row;
+        characterCol = col;
+        if (direction == Direction.UP) {
+            if (!checkWallCollision(row+1, col)) {
+                tray[row+1][col] = Actor.STORAGE1;
+            }
+        }
+        if (direction == Direction.DOWN) {
+            if (!checkWallCollision(row-1, col)) {
+                tray[row-1][col] = Actor.STORAGE1;
+            }
+        }
+        if (direction == Direction.LEFT) {
+            if (!checkWallCollision(row, col+1)) {
+                tray[row][col+1] = Actor.STORAGE1;
+            }
+        }
+        if (direction == Direction.RIGHT) {
+            if (!checkWallCollision(row, col-1)) {
+                tray[row][col-1] = Actor.STORAGE1;
             }
         }
     }
