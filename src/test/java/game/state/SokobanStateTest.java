@@ -159,11 +159,12 @@ class SokobanStateTest {
         assertCharacterSpace(1, 3, state);
         state.pushBall(2, 3);
         assertCharacterSpace(2, 3, state);
+        assertEquals(Actor.BALL, state.getTray()[3][3]);
     }
 
     @Test
     void testIsBallPlaced() {
-
+        
     }
 
     @Test
