@@ -164,7 +164,52 @@ class SokobanStateTest {
 
     @Test
     void testIsBallPlaced() {
-
+        SokobanState state = new SokobanState();
+        assertCharacterSpace(1, 1, state);
+        state.moveToEmptySpace(1, 2);
+        assertCharacterSpace(1, 2, state);
+        state.moveToEmptySpace(1, 3);
+        assertCharacterSpace(1, 3, state);
+        state.moveToEmptySpace(2, 3);
+        assertCharacterSpace(2, 3, state);
+        state.moveToEmptySpace(3, 3);
+        assertCharacterSpace(3, 3, state);
+        state.moveToEmptySpace(4, 3);
+        assertCharacterSpace(4, 3, state);
+        state.moveToEmptySpace(5, 3);
+        assertCharacterSpace(5, 3, state);
+        state.moveToEmptySpace(5, 4);
+        assertCharacterSpace(5, 4, state);
+        state.moveToEmptySpace(6, 4);
+        assertCharacterSpace(6, 4, state);
+        state.moveToEmptySpace(7, 4);
+        assertCharacterSpace(7, 4, state);
+        state.moveToEmptySpace(7, 3);
+        assertCharacterSpace(7, 3, state);
+        state.moveToEmptySpace(7, 2);
+        assertCharacterSpace(7, 2, state);
+        state.moveToEmptySpace(6, 2);
+        assertCharacterSpace(6, 2, state);
+        state.moveToEmptySpace(6, 3);
+        assertCharacterSpace(6, 3, state);
+        state.moveToEmptySpace(7, 3);
+        assertCharacterSpace(7, 3, state);
+        state.moveToEmptySpace(7, 4);
+        assertCharacterSpace(7, 4, state);
+        state.moveToEmptySpace(6, 4);
+        assertCharacterSpace(6, 4, state);
+        state.moveToEmptySpace(6, 3);
+        assertCharacterSpace(6, 3, state);
+        state.moveToEmptySpace(5, 3);
+        assertCharacterSpace(5, 3, state);
+        state.moveToEmptySpace(5, 4);
+        assertCharacterSpace(5, 4, state);
+        state.moveToEmptySpace(5, 5);
+        assertCharacterSpace(5, 5, state);
+        assertFalse(state.isBallPlaced(4, 5));
+        assertFalse(state.isBallPlaced(5, 4));
+        assertFalse(state.isBallPlaced(6, 5));
+        assertTrue(state.isBallPlaced(5, 6));
     }
 
     @Test
