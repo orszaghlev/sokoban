@@ -171,16 +171,20 @@ public class SokobanState implements Cloneable {
      */
     public boolean checkBallCollision(int row, int col) {
         Direction direction = getMoveDirection(row, col);
-        if (direction == Direction.UP && tray[characterRow+1][characterCol] == Actor.BALL) {
+        if (direction == Direction.UP && (tray[characterRow+1][characterCol] == Actor.BALL
+                || tray[characterRow+1][characterCol] == Actor.STORAGE1)) {
             return true;
         }
-        if (direction == Direction.DOWN && tray[characterRow-1][characterCol] == Actor.BALL) {
+        if (direction == Direction.DOWN && (tray[characterRow-1][characterCol] == Actor.BALL
+                || tray[characterRow-1][characterCol] == Actor.STORAGE1)) {
             return true;
         }
-        if (direction == Direction.LEFT && tray[characterRow][characterCol+1] == Actor.BALL) {
+        if (direction == Direction.LEFT && (tray[characterRow][characterCol+1] == Actor.BALL
+                || tray[characterRow][characterCol+1] == Actor.STORAGE1)) {
             return true;
         }
-        if (direction == Direction.RIGHT && tray[characterRow][characterCol-1] == Actor.BALL) {
+        if (direction == Direction.RIGHT && (tray[characterRow][characterCol-1] == Actor.BALL
+                || tray[characterRow][characterCol-1] == Actor.STORAGE1)) {
             return true;
         }
         return false;
