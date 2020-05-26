@@ -151,7 +151,14 @@ class SokobanStateTest {
 
     @Test
     void testPushBall() {
-
+        SokobanState state = new SokobanState();
+        assertCharacterSpace(1, 1, state);
+        state.moveToEmptySpace(1, 2);
+        assertCharacterSpace(1, 2, state);
+        state.moveToEmptySpace(1, 3);
+        assertCharacterSpace(1, 3, state);
+        state.pushBall(2, 3);
+        assertCharacterSpace(2, 3, state);
     }
 
     @Test
