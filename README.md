@@ -1,6 +1,6 @@
 # Sokoban
 A Java implementation of the classic game Sokoban,
-where the objective is to place the balls to the right storages.
+where the objective is to push the balls into the right storages.
 
 ![img](https://i.imgur.com/1v8G3fb.png)
 
