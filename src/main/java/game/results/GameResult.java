@@ -40,9 +40,9 @@ public class GameResult {
     private int steps;
 
     /**
-     * The number of balls placed by the player.
+     * The number of ball pushes made by the player.
      */
-    private int balls;
+    private int pushes;
 
     /**
      * The duration of the game.

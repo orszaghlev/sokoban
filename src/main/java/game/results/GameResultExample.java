@@ -9,8 +9,8 @@ public class GameResultExample {
         GameResult gameResult = GameResult.builder()
                 .player("orszaghlev")
                 .solved(true)
-                .steps(36)
-                .balls(3)
+                .steps(92)
+                .pushes(30)
                 .duration(Duration.ofMinutes(3))
                 .build();
         gameResultDao.persist(gameResult);

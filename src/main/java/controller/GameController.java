@@ -30,7 +30,7 @@ public class GameController {
     private SokobanState gameState;
     private String userName;
     private int stepCount;
-    private int ballCount;
+    private int pushCount;
     private List<Image> levelImages;
     private Instant beginGame;
 
@@ -46,7 +46,7 @@ public class GameController {
     private Label stepLabel;
 
     @FXML
-    private Label ballLabel;
+    private Label pushLabel;
 
     @FXML
     private Label solvedLabel;
@@ -56,7 +56,7 @@ public class GameController {
 
     private void drawGameState() {
         stepLabel.setText(String.valueOf(stepCount));
-        ballLabel.setText(String.valueOf(ballCount));
+        pushLabel.setText(String.valueOf(pushCount));
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -76,7 +76,7 @@ public class GameController {
         gameResultDao = GameResultDao.getInstance();
         gameState = new SokobanState();
         stepCount = 0;
-        ballCount = 0;
+        pushCount = 0;
         beginGame = Instant.now();
 
         levelImages = Arrays.asList(
@@ -101,7 +101,7 @@ public class GameController {
                 gameState.moveToEmptySpace(clickedRow, clickedColumn);
             }
             else {
-                ballCount++;
+                pushCount++;
                 if (!gameState.isBallPlaced(clickedRow, clickedColumn)) {
                     gameState.pushBall(clickedRow, clickedColumn);
                 }
@@ -123,7 +123,7 @@ public class GameController {
     public void resetGame(ActionEvent actionEvent) {
         gameState = new SokobanState();
         stepCount = 0;
-        ballCount = 0;
+        pushCount = 0;
         solvedLabel.setText("");
         drawGameState();
         beginGame = Instant.now();
@@ -135,7 +135,7 @@ public class GameController {
                                     .player(userName)
                                     .solved(gameState.isSolved())
                                     .duration(Duration.between(beginGame, Instant.now()))
-                                    .balls(ballCount)
+                                    .pushes(pushCount)
                                     .steps(stepCount)
                                     .build();
         return result;
