@@ -262,6 +262,66 @@ class SokobanStateTest {
     }
 
     @Test
+    void testPlaceEmptyStorage() {
+        SokobanState state = new SokobanState();
+        assertCharacterSpace(1, 1, state);
+        state.moveToEmptySpace(1, 2);
+        assertCharacterSpace(1, 2, state);
+        state.moveToEmptySpace(1, 3);
+        assertCharacterSpace(1, 3, state);
+        state.moveToEmptySpace(2, 3);
+        assertCharacterSpace(2, 3, state);
+        state.moveToEmptySpace(3, 3);
+        assertCharacterSpace(3, 3, state);
+        state.moveToEmptySpace(4, 3);
+        assertCharacterSpace(4, 3, state);
+        state.moveToEmptySpace(5, 3);
+        assertCharacterSpace(5, 3, state);
+        state.moveToEmptySpace(5, 4);
+        assertCharacterSpace(5, 4, state);
+        state.moveToEmptySpace(6, 4);
+        assertCharacterSpace(6, 4, state);
+        state.moveToEmptySpace(7, 4);
+        assertCharacterSpace(7, 4, state);
+        state.moveToEmptySpace(7, 3);
+        assertCharacterSpace(7, 3, state);
+        state.moveToEmptySpace(7, 2);
+        assertCharacterSpace(7, 2, state);
+        state.moveToEmptySpace(6, 2);
+        assertCharacterSpace(6, 2, state);
+        state.moveToEmptySpace(6, 3);
+        assertCharacterSpace(6, 3, state);
+        state.moveToEmptySpace(7, 3);
+        assertCharacterSpace(7, 3, state);
+        state.moveToEmptySpace(7, 4);
+        assertCharacterSpace(7, 4, state);
+        state.moveToEmptySpace(6, 4);
+        assertCharacterSpace(6, 4, state);
+        state.moveToEmptySpace(6, 3);
+        assertCharacterSpace(6, 3, state);
+        state.moveToEmptySpace(5, 3);
+        assertCharacterSpace(5, 3, state);
+        state.moveToEmptySpace(5, 4);
+        assertCharacterSpace(5, 4, state);
+        state.moveToEmptySpace(5, 5);
+        assertCharacterSpace(5, 5, state);
+        state.moveToEmptySpace(5, 6);
+        assertCharacterSpace(5, 6, state);
+        state.moveToEmptySpace(6, 6);
+        assertCharacterSpace(6, 6, state);
+        state.moveToEmptySpace(6, 7);
+        assertCharacterSpace(6, 7, state);
+        state.moveToEmptySpace(5, 7);
+        assertCharacterSpace(5, 7, state);
+        assertEquals(Actor.CHARACTER, state.getTray()[5][7]);
+        state.moveToEmptySpace(4, 7);
+        assertCharacterSpace(4, 7, state);
+        state.placeEmptyStorage();
+        assertCharacterSpace(4, 7, state);
+        assertEquals(Actor.STORAGE0, state.getTray()[5][7]);
+    }
+
+    @Test
     void testToString() {
         SokobanState state = new SokobanState();
         assertEquals("1 1 1 1 1 0 0 0 0 \n"
