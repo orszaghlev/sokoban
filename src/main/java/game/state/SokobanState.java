@@ -134,8 +134,8 @@ public class SokobanState implements Cloneable {
      * Returns whether the character could collide
      * with the wall when moving to the specified position.
      *
-     * @param row the row where the character would be moved
-     * @param col the column where the character would be moved
+     * @param row the row where the character would be moved to
+     * @param col the column where the character would be moved to
      * @return {@code true} if the character could collide
      * with the wall, {@code false} otherwise
      */
@@ -160,8 +160,8 @@ public class SokobanState implements Cloneable {
      * Returns whether the character could collide
      * with a ball when moving to the specified position.
      *
-     * @param row the row where the character would be moved
-     * @param col the column where the character would be moved
+     * @param row the row where the character would be moved to
+     * @param col the column where the character would be moved to
      * @return {@code true} if the character could collide
      * with a ball, {@code false} otherwise
      */
@@ -190,9 +190,9 @@ public class SokobanState implements Cloneable {
      * Moves the character to the ball's original space
      * and moves the ball to the empty space.
      *
-     * @param row the row where the character would be moved
+     * @param row the row where the character would be moved to
      *            (the ball's original row)
-     * @param col the column where the character would be moved
+     * @param col the column where the character would be moved to
      *            (the ball's original column)
      */
     public void pushBall(int row, int col) {
@@ -233,8 +233,8 @@ public class SokobanState implements Cloneable {
      * Returns whether the ball was placed in
      * one of the storages.
      *
-     * @param row the row where the character would be moved
-     * @param col the column where the character would be moved
+     * @param row the row where the character would be moved to
+     * @param col the column where the character would be moved to
      * @return {@code true} if the ball was placed in
      * one of the storages, {@code false} otherwise
      */
@@ -259,9 +259,9 @@ public class SokobanState implements Cloneable {
      * Moves the character to the ball's original space
      * and fills one of the storages.
      *
-     * @param row the row where the character would be moved
+     * @param row the row where the character would be moved to
      *            (the ball's original row)
-     * @param col the column where the character would be moved
+     * @param col the column where the character would be moved to
      *            (the ball's original column)
      */
     public void fillStorage(int row, int col) {
@@ -291,6 +291,23 @@ public class SokobanState implements Cloneable {
             if (!checkWallCollision(row, col-1)) {
                 tray[row][col-1] = Actor.STORAGE1;
             }
+        }
+    }
+
+    /**
+     * Checks if the empty storages are on the level
+     * and adds them if they were replaced with a filled
+     * storage or if the player currently stands at its place.
+     */
+    public void placeEmptyStorage() {
+        if (!(tray[3][7] == Actor.STORAGE1 || tray[3][7] == Actor.CHARACTER)) {
+            tray[3][7] = Actor.STORAGE0;
+        }
+        if (!(tray[4][7] == Actor.STORAGE1 || tray[4][7] == Actor.CHARACTER)) {
+            tray[4][7] = Actor.STORAGE0;
+        }
+        if (!(tray[5][7] == Actor.STORAGE1 || tray[5][7] == Actor.CHARACTER)) {
+            tray[5][7] = Actor.STORAGE0;
         }
     }
 
