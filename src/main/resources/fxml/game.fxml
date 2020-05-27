@@ -123,8 +123,8 @@
                 <ImageView fitHeight="56.0" fitWidth="56.0" onMouseClicked="#levelClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="8" />
             </children>
         </GridPane>
-        <Button fx:id="doneButton" layoutX="309.0" layoutY="640.0" mnemonicParsing="false" onAction="#finishGame" prefHeight="52.0" prefWidth="83.0" text="Give up" />
-      <Label layoutX="31.0" layoutY="630.0" prefHeight="27.0" prefWidth="110.0" text="Placed balls:">
+        <Button fx:id="doneButton" layoutX="309.0" layoutY="640.0" mnemonicParsing="false" onAction="#finishGame" prefHeight="52.0" prefWidth="83.0" text="GIVE UP" />
+      <Label alignment="CENTER" layoutX="31.0" layoutY="630.0" prefHeight="27.0" prefWidth="110.0" text="Pushes:">
          <font>
             <Font size="18.0" />
          </font>
@@ -149,6 +149,6 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button fx:id="resetButton" layoutX="195.0" layoutY="640.0" mnemonicParsing="false" onAction="#resetGame" prefHeight="52.0" prefWidth="83.0" text="Reset" />
+        <Button fx:id="resetButton" layoutX="195.0" layoutY="640.0" mnemonicParsing="false" onAction="#resetGame" prefHeight="52.0" prefWidth="83.0" text="RESET" />
     </children>
 </Pane>
