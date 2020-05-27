@@ -244,7 +244,7 @@ public class SokobanState implements Cloneable {
     public void pushBall(int row, int col) {
         Direction direction = getMoveDirection(row, col);
         moveToEmptySpace(row, col);
-        log.info("Player moved a ball");
+        log.info("Player pushed a ball");
         if (direction == Direction.UP) {
             if (!checkWallCollision(row+1, col)) {
                 tray[row+1][col] = Actor.BALL;
