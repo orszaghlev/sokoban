@@ -2,7 +2,7 @@
 A Java implementation of the classic game Sokoban,
 where the objective is to place the balls to the right storages.
 
-![img](https://i.imgur.com/7r21aHs.png)
+![img](https://i.imgur.com/1v8G3fb.png)
 
 Run with the following commands, from the project's root directory:
 
