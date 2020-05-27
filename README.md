@@ -8,7 +8,7 @@ where the objective is to place the balls to the right storages.
 
 * mvn package
 
-* java -jar ./target/sokoban-1.0.jar
+* java --enable-preview -jar ./target/sokoban-1.0.jar
 
 ## Controls:
 
