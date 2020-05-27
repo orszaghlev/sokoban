@@ -4,22 +4,22 @@ where the objective is to place the balls to the right storages.
 
 ![img](https://i.imgur.com/1v8G3fb.png)
 
-Run with the following commands, from the project's root directory:
+## Run with the following commands, from the project's root directory:
 
 * mvn package
 
 * java -jar ./target/sokoban-1.0.jar
 
-Controls:
+## Controls:
 
 * LEFT MOUSE BUTTON to move the character
 
-Based on the example project developed by:
+## Based on the example project developed by:
 
 * Dr. Péter Jeszenszky
 
 * Roland Major
 
-Developer:
+## Developer:
 
 * Levente Országh
