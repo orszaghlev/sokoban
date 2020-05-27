@@ -129,7 +129,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-        <Label fx:id="solvedLabel" layoutX="424.0" layoutY="630.0" prefHeight="42.0" prefWidth="184.0" textFill="#002466">
+        <Label fx:id="solvedLabel" alignment="CENTER" layoutX="425.0" layoutY="639.0" prefHeight="42.0" prefWidth="222.0" textFill="#002466">
             <font>
                 <Font size="18.0" />
             </font>

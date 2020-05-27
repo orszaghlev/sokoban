@@ -101,19 +101,19 @@ public class GameController {
                 gameState.moveToEmptySpace(clickedRow, clickedColumn);
             }
             else {
+                ballCount++;
                 if (!gameState.isBallPlaced(clickedRow, clickedColumn)) {
                     gameState.pushBall(clickedRow, clickedColumn);
                 }
                 else {
-                    ballCount++;
                     gameState.fillStorage(clickedRow, clickedColumn);
                 }
             }
-
+            gameState.placeEmptyStorage();
             if (gameState.isSolved()) {
-                log.info("Player {} solved the game in {} steps.", userName, stepCount);
-                solvedLabel.setText("You solved the puzzle!");
-                doneButton.setText("Finish");
+                log.info("Player {} completed the level in {} steps.", userName, stepCount);
+                solvedLabel.setText("You completed the game!");
+                doneButton.setText("FINISH");
                 gameResultDao.persist(getResult());
             }
         }
