@@ -1,9 +1,7 @@
 package game.state;
 
 /**
- * The Actor enum represents the actors of the game:
- * the ball, the storage, the wall and the character.
- * @author orszaghlev
+ * Enum representing the actors of the game.
  */
 public enum Actor {
 

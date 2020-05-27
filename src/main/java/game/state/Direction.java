@@ -2,7 +2,6 @@ package game.state;
 
 /**
  * Enum representing the four cardinal directions.
- * @author orszaghlev
  */
 public enum Direction {
 

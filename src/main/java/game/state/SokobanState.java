@@ -6,8 +6,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The SokobanState class represents the state of the game.
- * @author orszaghlev
+ * Class representing the state of the game.
  */
 @Data
 @Slf4j
@@ -119,15 +118,62 @@ public class SokobanState implements Cloneable {
     }
 
     /**
-     * Checks whether the puzzle is solved.
+     * Checks whether the level is completed.
      *
-     * @return {@code true} if the puzzle is solved, {@code false} otherwise
+     * @return {@code true} if the level is completed, {@code false} otherwise
      */
     public boolean isSolved() {
         if (tray[3][7] == Actor.STORAGE1 && tray[4][7] == Actor.STORAGE1 && tray[5][7] == Actor.STORAGE1) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Returns whether the character can be moved to the
+     * empty space.
+     *
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return {@code true} if the character can be moved
+     * to the empty space, {@code false} otherwise
+     */
+    public boolean canMoveToEmptySpace(int row, int col) {
+        return 0 <= row && row <= 8 && 0 <= col && col <= 8 &&
+                Math.abs(characterRow - row) + Math.abs(characterCol - col) == 1;
+    }
+
+    /**
+     * Returns the direction to which the character is
+     * moved.
+     *
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return the direction to which the character is
+     * moved
+     * @throws IllegalArgumentException if the character
+     * can not be moved to the empty space
+     */
+    public Direction getMoveDirection(int row, int col) {
+        if (!canMoveToEmptySpace(row, col)) {
+            throw new IllegalArgumentException();
+        }
+        return Direction.of(characterRow - row, characterCol - col);
+    }
+
+    /**
+     * Moves the character to the empty space.
+     *
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     */
+    public void moveToEmptySpace(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        log.info("Player moved to ({},{}) from {}", row, col, direction);
+        tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
+        tray[row][col] = Actor.CHARACTER;
+        characterRow = row;
+        characterCol = col;
     }
 
     /**
@@ -188,7 +234,7 @@ public class SokobanState implements Cloneable {
 
     /**
      * Moves the character to the ball's original space
-     * and moves the ball to the empty space.
+     * and pushes the ball further.
      *
      * @param row the row where the character would be moved to
      *            (the ball's original row)
@@ -197,12 +243,8 @@ public class SokobanState implements Cloneable {
      */
     public void pushBall(int row, int col) {
         Direction direction = getMoveDirection(row, col);
-        log.info("Player moved to ({},{}) from {}", row, col, direction);
+        moveToEmptySpace(row, col);
         log.info("Player moved a ball");
-        tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
-        tray[row][col] = Actor.CHARACTER;
-        characterRow = row;
-        characterCol = col;
         if (direction == Direction.UP) {
             if (!checkWallCollision(row+1, col)) {
                 tray[row+1][col] = Actor.BALL;
@@ -266,12 +308,8 @@ public class SokobanState implements Cloneable {
      */
     public void fillStorage(int row, int col) {
         Direction direction = getMoveDirection(row, col);
-        log.info("Player moved to ({},{}) from {}", row, col, direction);
+        moveToEmptySpace(row, col);
         log.info("Player filled a storage");
-        tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
-        tray[row][col] = Actor.CHARACTER;
-        characterRow = row;
-        characterCol = col;
         if (direction == Direction.UP) {
             if (!checkWallCollision(row+1, col)) {
                 tray[row+1][col] = Actor.STORAGE1;
@@ -296,8 +334,8 @@ public class SokobanState implements Cloneable {
 
     /**
      * Checks if the empty storages are on the level
-     * and adds them if they were replaced with a filled
-     * storage or if the player currently stands at its place.
+     * and places them back if the player was standing
+     * in their original position.
      */
     public void placeEmptyStorage() {
         if (!(tray[3][7] == Actor.STORAGE1 || tray[3][7] == Actor.CHARACTER)) {
@@ -309,53 +347,6 @@ public class SokobanState implements Cloneable {
         if (!(tray[5][7] == Actor.STORAGE1 || tray[5][7] == Actor.CHARACTER)) {
             tray[5][7] = Actor.STORAGE0;
         }
-    }
-
-    /**
-     * Returns whether the character can be moved to the
-     * empty space.
-     *
-     * @param row the row where the character would be moved
-     * @param col the column where the character would be moved
-     * @return {@code true} if the character can be moved
-     * to the empty space, {@code false} otherwise
-     */
-    public boolean canMoveToEmptySpace(int row, int col) {
-        return 0 <= row && row <= 8 && 0 <= col && col <= 8 &&
-                Math.abs(characterRow - row) + Math.abs(characterCol - col) == 1;
-    }
-
-    /**
-     * Returns the direction to which the character is
-     * moved to the empty space.
-     *
-     * @param row the row where the character would be moved
-     * @param col the column where the character would be moved
-     * @return the direction to which the character is
-     * moved to the empty space
-     * @throws IllegalArgumentException if the character
-     * can not be moved to the empty space
-     */
-    public Direction getMoveDirection(int row, int col) {
-        if (!canMoveToEmptySpace(row, col)) {
-            throw new IllegalArgumentException();
-        }
-        return Direction.of(characterRow - row, characterCol - col);
-    }
-
-    /**
-     * Moves the character to the empty space.
-     *
-     * @param row the row where the character would be moved
-     * @param col the column where the character would be moved
-     */
-    public void moveToEmptySpace(int row, int col) {
-        Direction direction = getMoveDirection(row, col);
-        log.info("Player moved to ({},{}) from {}", row, col, direction);
-        tray[characterRow][characterCol] = tray[row][col].moveTo(direction);
-        tray[row][col] = Actor.CHARACTER;
-        characterRow = row;
-        characterCol = col;
     }
 
     public SokobanState clone() {
