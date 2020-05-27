@@ -9,7 +9,7 @@
     <version>1.0</version>
     <description>
         A Java implementation of the classic game Sokoban,
-        where the objective is to place the balls to the right storages.
+        where the objective is to push the balls into the right storages.
     </description>
     <developers>
         <developer>
@@ -32,6 +32,7 @@
         <exec.cleanupDaemonThreads>false</exec.cleanupDaemonThreads>
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <exec.mainClass>main.Main</exec.mainClass>
+        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
     </properties>
     <dependencies>
         <dependency>
