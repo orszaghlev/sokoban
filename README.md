@@ -6,9 +6,15 @@ where the objective is to push the balls into the right storages.
 
 ## Run with the following commands, from the project's root directory:
 
-* mvn package
+```
+$ mvn package
+```
 
-* java --enable-preview -jar ./target/sokoban-1.0.jar
+```
+$ java -jar ./target/sokoban-1.0.jar
+```
+
+(Requires JDK 11 or later and Apache Maven.)
 
 ## Controls:
 
