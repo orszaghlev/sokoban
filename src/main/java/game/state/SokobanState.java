@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.boot.model.naming.DatabaseIdentifier;
 
 /**
  * Class representing the state of the game.
@@ -146,6 +147,25 @@ public class SokobanState implements Cloneable {
     }
 
     /**
+     * Returns whether the character would move to one of
+     * the cardinal directions.
+     *
+     * @param row the row where the character would be moved
+     * @param col the column where the character would be moved
+     * @return {@code true} if the character would move to one
+     * of the cardinal directions, {@code false} otherwise
+     */
+    public boolean isMoveDirectionCorrect(int row, int col) {
+        if (Direction.of(characterRow - row, characterCol - col) == Direction.UP
+                || Direction.of(characterRow - row, characterCol - col) == Direction.LEFT
+                || Direction.of(characterRow - row, characterCol - col) == Direction.RIGHT
+                || Direction.of(characterRow - row, characterCol - col) == Direction.DOWN) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns the direction to which the character is
      * moved.
      *
@@ -153,13 +173,8 @@ public class SokobanState implements Cloneable {
      * @param col the column where the character would be moved
      * @return the direction to which the character is
      * moved
-     * @throws IllegalArgumentException if the character
-     * can not be moved to the empty space
      */
     public Direction getMoveDirection(int row, int col) {
-        //if (!canMove(row, col)) {
-            //throw new IllegalArgumentException();
-        //}
         return Direction.of(characterRow - row, characterCol - col);
     }
 
@@ -246,20 +261,44 @@ public class SokobanState implements Cloneable {
     public void avoidBallDisappearance(int row, int col) {
         Direction direction = getMoveDirection(row, col);
         if (direction == Direction.UP) {
+            if ((tray[row+1][col] == Actor.WALL || tray[row+1][col] == Actor.BALL) && tray[row][col] != Actor.STORAGE1) {
                 tray[row][col] = Actor.BALL;
                 tray[row-1][col] = Actor.CHARACTER;
+            }
+            if ((tray[row+1][col] == Actor.WALL || tray[row+1][col] == Actor.BALL) && tray[row][col] == Actor.STORAGE1) {
+                tray[row][col] = Actor.STORAGE1;
+                tray[row-1][col] = Actor.CHARACTER;
+            }
         }
         if (direction == Direction.DOWN) {
+            if ((tray[row-1][col] == Actor.WALL || tray[row-1][col] == Actor.BALL) && tray[row][col] != Actor.STORAGE1) {
                 tray[row][col] = Actor.BALL;
                 tray[row+1][col] = Actor.CHARACTER;
+            }
+            if ((tray[row-1][col] == Actor.WALL || tray[row-1][col] == Actor.BALL) && tray[row][col] == Actor.STORAGE1) {
+                tray[row][col] = Actor.STORAGE1;
+                tray[row+1][col] = Actor.CHARACTER;
+            }
         }
         if (direction == Direction.LEFT) {
+            if ((tray[row][col+1] == Actor.WALL || tray[row][col+1] == Actor.BALL) && tray[row][col] != Actor.STORAGE1) {
                 tray[row][col] = Actor.BALL;
                 tray[row][col-1] = Actor.CHARACTER;
+            }
+            if ((tray[row][col+1] == Actor.WALL || tray[row][col+1] == Actor.BALL) && tray[row][col] == Actor.STORAGE1) {
+                tray[row][col] = Actor.STORAGE1;
+                tray[row][col-1] = Actor.CHARACTER;
+            }
         }
         if (direction == Direction.RIGHT) {
+            if ((tray[row][col-1] == Actor.WALL || tray[row][col-1] == Actor.BALL) && tray[row][col] != Actor.STORAGE1) {
                 tray[row][col] = Actor.BALL;
                 tray[row][col+1] = Actor.CHARACTER;
+            }
+            if ((tray[row][col-1] == Actor.WALL || tray[row][col-1] == Actor.BALL) && tray[row][col] == Actor.STORAGE1) {
+                tray[row][col] = Actor.STORAGE1;
+                tray[row][col+1] = Actor.CHARACTER;
+            }
         }
     }
 
