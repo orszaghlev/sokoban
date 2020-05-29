@@ -92,13 +92,13 @@ class SokobanStateTest {
     }
 
     @Test
-    void testCanMoveToEmptySpace() {
+    void testCanMove() {
         SokobanState state = new SokobanState();
         assertCharacterSpace(1, 1, state);
-        assertFalse(state.canMoveToEmptySpace(1, 1));
-        assertFalse(state.canMoveToEmptySpace(0, 2));
-        assertTrue(state.canMoveToEmptySpace(1, 2));
-        assertTrue(state.canMoveToEmptySpace(2, 1));
+        assertFalse(state.canMove(1, 1));
+        assertFalse(state.canMove(0, 2));
+        assertTrue(state.canMove(1, 2));
+        assertTrue(state.canMove(2, 1));
     }
 
     @Test
@@ -109,10 +109,6 @@ class SokobanStateTest {
         assertEquals(Direction.RIGHT, state.getMoveDirection(1, 0));
         assertEquals(Direction.DOWN, state.getMoveDirection(0, 1));
         assertEquals(Direction.LEFT, state.getMoveDirection(1, 2));
-        assertThrows(IllegalArgumentException.class, () -> state.getMoveDirection(1, 1));
-        assertThrows(IllegalArgumentException.class, () -> state.getMoveDirection(0, 0));
-        assertThrows(IllegalArgumentException.class, () -> state.getMoveDirection(0, 2));
-        assertThrows(IllegalArgumentException.class, () -> state.getMoveDirection(2, 0));
     }
 
     @Test

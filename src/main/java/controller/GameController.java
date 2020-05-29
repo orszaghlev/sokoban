@@ -95,18 +95,22 @@ public class GameController {
         int clickedColumn = GridPane.getColumnIndex((Node)mouseEvent.getSource());
         int clickedRow = GridPane.getRowIndex((Node)mouseEvent.getSource());
 
-        if (!gameState.isSolved() && !gameState.checkWallCollision(clickedRow, clickedColumn) && gameState.canMoveToEmptySpace(clickedRow, clickedColumn)) {
+        if (!gameState.isSolved() && !gameState.checkWallCollision(clickedRow, clickedColumn) && gameState.canMove(clickedRow, clickedColumn)) {
             stepCount++;
             if (!gameState.checkBallCollision(clickedRow, clickedColumn)) {
                 gameState.moveToEmptySpace(clickedRow, clickedColumn);
             }
             else {
-                pushCount++;
-                if (!gameState.isBallPlaced(clickedRow, clickedColumn)) {
-                    gameState.pushBall(clickedRow, clickedColumn);
+                if (gameState.checksBallDisappearance(clickedRow, clickedColumn)) {
+                    gameState.avoidBallDisappearance(clickedRow, clickedColumn);
                 }
                 else {
-                    gameState.fillStorage(clickedRow, clickedColumn);
+                    pushCount++;
+                    if (!gameState.isBallPlaced(clickedRow, clickedColumn)) {
+                        gameState.pushBall(clickedRow, clickedColumn);
+                    } else {
+                        gameState.fillStorage(clickedRow, clickedColumn);
+                    }
                 }
             }
             gameState.placeEmptyStorage();

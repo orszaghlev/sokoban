@@ -130,17 +130,19 @@ public class SokobanState implements Cloneable {
     }
 
     /**
-     * Returns whether the character can be moved to the
-     * empty space.
+     * Returns whether the character can be moved.
      *
      * @param row the row where the character would be moved
      * @param col the column where the character would be moved
-     * @return {@code true} if the character can be moved
-     * to the empty space, {@code false} otherwise
+     * @return {@code true} if the character can be moved,
+     * {@code false} otherwise
      */
-    public boolean canMoveToEmptySpace(int row, int col) {
-        return 0 <= row && row <= 8 && 0 <= col && col <= 8 &&
-                Math.abs(characterRow - row) + Math.abs(characterCol - col) == 1;
+    public boolean canMove(int row, int col) {
+        if (tray[row][col] == Actor.EMPTY || tray[row][col] == Actor.BALL || tray[row][col] == Actor.STORAGE0
+            || tray[row][col] == Actor.STORAGE1) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -155,9 +157,9 @@ public class SokobanState implements Cloneable {
      * can not be moved to the empty space
      */
     public Direction getMoveDirection(int row, int col) {
-        if (!canMoveToEmptySpace(row, col)) {
-            throw new IllegalArgumentException();
-        }
+        //if (!canMove(row, col)) {
+            //throw new IllegalArgumentException();
+        //}
         return Direction.of(characterRow - row, characterCol - col);
     }
 
@@ -186,17 +188,7 @@ public class SokobanState implements Cloneable {
      * with the wall, {@code false} otherwise
      */
     public boolean checkWallCollision(int row, int col) {
-        Direction direction = getMoveDirection(row, col);
-        if (direction == Direction.UP && tray[characterRow+1][characterCol] == Actor.WALL) {
-            return true;
-        }
-        if (direction == Direction.DOWN && tray[characterRow-1][characterCol] == Actor.WALL) {
-            return true;
-        }
-        if (direction == Direction.LEFT && tray[characterRow][characterCol+1] == Actor.WALL) {
-            return true;
-        }
-        if (direction == Direction.RIGHT && tray[characterRow][characterCol-1] == Actor.WALL) {
+        if (tray[row][col] == Actor.WALL) {
             return true;
         }
         return false;
@@ -212,24 +204,63 @@ public class SokobanState implements Cloneable {
      * with a ball, {@code false} otherwise
      */
     public boolean checkBallCollision(int row, int col) {
-        Direction direction = getMoveDirection(row, col);
-        if (direction == Direction.UP && (tray[characterRow+1][characterCol] == Actor.BALL
-                || tray[characterRow+1][characterCol] == Actor.STORAGE1)) {
-            return true;
-        }
-        if (direction == Direction.DOWN && (tray[characterRow-1][characterCol] == Actor.BALL
-                || tray[characterRow-1][characterCol] == Actor.STORAGE1)) {
-            return true;
-        }
-        if (direction == Direction.LEFT && (tray[characterRow][characterCol+1] == Actor.BALL
-                || tray[characterRow][characterCol+1] == Actor.STORAGE1)) {
-            return true;
-        }
-        if (direction == Direction.RIGHT && (tray[characterRow][characterCol-1] == Actor.BALL
-                || tray[characterRow][characterCol-1] == Actor.STORAGE1)) {
+        if (tray[row][col] == Actor.BALL || tray[row][col] == Actor.STORAGE1) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Returns whether the character would make the
+     * ball disappear when moving to the specified position.
+     *
+     * @param row the row where the character would be moved to
+     * @param col the column where the character would be moved to
+     * @return {@code true} if the character would make the
+     * ball disappear, {@code false} otherwise
+     */
+    public boolean checksBallDisappearance(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        if (direction == Direction.UP && (tray[row+1][col] == Actor.WALL || tray[row+1][col] == Actor.BALL)) {
+            return true;
+        }
+        if (direction == Direction.DOWN && (tray[row-1][col] == Actor.WALL || tray[row-1][col] == Actor.BALL)) {
+            return true;
+        }
+        if (direction == Direction.LEFT && (tray[row][col+1] == Actor.WALL || tray[row][col+1] == Actor.BALL)) {
+            return true;
+        }
+        if (direction == Direction.RIGHT && (tray[row][col-1] == Actor.WALL || tray[row][col-1] == Actor.BALL)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Avoids ball disappearance by checking which actor is
+     * at the position where the ball would be pushed.
+     *
+     * @param row the row where the character would be moved to
+     * @param col the column where the character would be moved to
+     */
+    public void avoidBallDisappearance(int row, int col) {
+        Direction direction = getMoveDirection(row, col);
+        if (direction == Direction.UP) {
+                tray[row][col] = Actor.BALL;
+                tray[row-1][col] = Actor.CHARACTER;
+        }
+        if (direction == Direction.DOWN) {
+                tray[row][col] = Actor.BALL;
+                tray[row+1][col] = Actor.CHARACTER;
+        }
+        if (direction == Direction.LEFT) {
+                tray[row][col] = Actor.BALL;
+                tray[row][col-1] = Actor.CHARACTER;
+        }
+        if (direction == Direction.RIGHT) {
+                tray[row][col] = Actor.BALL;
+                tray[row][col+1] = Actor.CHARACTER;
+        }
     }
 
     /**
